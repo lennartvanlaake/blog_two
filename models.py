@@ -2,7 +2,8 @@
 from setup import db
 
 class BlogPost(db.Model):
-    name = db.Column(db.String(20), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(20), nullable=False)
     blog_type = db.Column(db.String(10), nullable=False)
     content = db.Column(db.String(2000), nullable=False)
     longditude = db.Column(db.Float(), nullable=False)

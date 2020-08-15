@@ -1,5 +1,5 @@
-from flask import render_template, request
-from blog_post_service import create_post, get_posts, get_first_post
+from flask import render_template, request, jsonify
+from blog_post_service import create_post, get_posts, get_first_post, get_posts_page
 from blog_type_service import get_blog_types, add_blog_type
 from setup import app
 from models import migrate
@@ -7,6 +7,15 @@ from models import migrate
 @app.route('/')
 def index():
     return render_template('index.html', posts=get_posts(), first_post=get_first_post())
+
+@app.route('/posts')
+def posts_template():
+    return render_template('view_posts.html')
+
+@app.route('/api/posts')
+def posts_page():
+    blogs = get_posts_page(int(request.args.get('start')),  int(request.args.get('size')))
+    return jsonify([ blog.__dict__ for blog in blogs])
 
 @app.route('/admin/posts/new', methods=['POST', 'GET'])
 def admin():

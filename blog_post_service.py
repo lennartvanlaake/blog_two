@@ -16,3 +16,15 @@ def get_first_post():
 
 def get_posts():
     return BlogPost.query.all()
+
+def get_posts_page(start, size):
+    posts = BlogPost.query.filter(BlogPost.id >= start).limit(size).all()
+    return [ to_response(post) for post in posts ]
+
+def to_response(post):
+    return BlogPostResponse(post.name, post.content)
+    
+class BlogPostResponse():
+    def __init__(self, name, content):
+        self.name = name
+        self.content = content

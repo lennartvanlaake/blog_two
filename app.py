@@ -1,29 +1,23 @@
-from flask import Flask, render_template, request
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db = SQLAlchemy(app)
+from flask import render_template, request
+from blog_post_service import create_post, get_posts, get_first_post
+from blog_type_service import get_blog_types, add_blog_type
+from setup import app
+from models import migrate
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', posts=get_posts(), first_post=get_first_post())
 
 @app.route('/admin/posts/new', methods=['POST', 'GET'])
 def admin():
     if (request.method == 'POST'):
-        post = BlogPost(name=request.form['name'], blog_type=request.form['blog_type'],
-               content=request.form['content'])
-        db.session.add(post)
-        db.session.commit()
-    return render_template('new_post.html')
-
-class BlogPost(db.Model):
-    name = db.Column(db.String(20), primary_key=True)
-    blog_type = db.Column(db.String(10), nullable=False)
-    content = db.Column(db.String(2000), nullable=False)
+        create_post(name = request.form['name'],
+                    blog_type = request.form['blog_type'],
+                    content=request.form['content'],
+                    longditude=request.form['longditude'],
+                    latitude=request.form['latitude'])
+    return render_template('new_post.html', types=get_blog_types())
 
 if __name__ == '__main__':
-    db.create_all()
+    migrate()
     app.run(port=10001, debug=True)

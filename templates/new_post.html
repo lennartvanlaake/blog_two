@@ -1,6 +1,9 @@
 <HTML>
 <HEAD>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
 <HEAD>
 <BODY>
 
@@ -8,7 +11,7 @@
 <fieldset>
 
 <!-- Form Name -->
-<legend>Form Name</legend>
+<legend>Creating posts</legend>
 
 <!-- Text input-->
 <div class="form-group">
@@ -24,8 +27,9 @@
   <label class="col-md-4 control-label" for="blog_type">Blog type</label>
   <div class="col-md-4">
     <select id="blog_type" name="blog_type" class="form-control">
-      <option value="1">A</option>
-      <option value="2">B</option>
+      {% for type in types %}
+      <option value="{{ type }}">{{ type }}</option>
+      {% endfor %}
     </select>
   </div>
 </div>
@@ -34,6 +38,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="content">Content</label>  
   <div class="col-md-6">
+  
   <input id="content" name="content" type="text" placeholder="content" class="form-control input-md">
     
   </div>
@@ -55,10 +60,23 @@
   </div>
 </div>
 
+<input type="hidden" id="longditude" name="longditude"> 
+<input type="hidden" id="latitude" name="latitude">
+
 </fieldset>
 </form>
 
 
 </BODY>
+
+<script>
+var simplemde = new SimpleMDE({ element: document.getElementById("content") });
+function setCoordinates(position) {
+    document.getElementById("latitude").value = position.coords.latitude;
+    document.getElementById("longditude").value = position.coords.longitude;
+}
+navigator.geolocation.getCurrentPosition(setCoordinates);
+</script>
+
 </HTML>
 

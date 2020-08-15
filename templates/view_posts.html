@@ -1,9 +1,54 @@
+<HTML>
+<HEAD>
 <script src="https://cdn.tutorialjinni.com/showdown/1.9.1/showdown.js"></script>
-function run() {
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+			  crossorigin="anonymous"></script>
+<HEAD>
+<BODY>
+<div id="target"></div>
+</BODY>
+
+<script>
+const pageSize=5
+const forward="forward"
+const backward="backward"
+const startPost={{ start_post }}
+const converter = new showdown.Converter()
+const postContainer = document.getElementById('target')
+function loadPosts(start, direction, callback) {
+    $.getJSON("/api/posts?start=" + start + "&size=" + pageSize + "&direction=" + direction, callback)
+}
+function renderPosts(data) {
+  data.forEach(post => renderPost(post))
+}
+function renderPost(post) {
+  var postElement = document.createElement("DIV");
+  var postContent = document.createElement("DIV");
+  var postTitle = document.createElement("H1");
+
+  postContainer.append(postTitle);
+  postContainer.append(postElement);
+  postElement.append(postContent);
+
+  postElement.innerHTML = converter.makeHtml(post.content)
+  postTitle.innerText= post.name
+}
+loadPosts(0, "forward", renderPosts)
+
+
+/**function run() {
   var text = document.getElementById('sourceTA').value,
       target = document.getElementById('targetDiv'),
       converter = new showdown.Converter(),
       html = converter.makeHtml(text);
     
     target.innerHTML = html;
-}
+}**/
+</script>
+
+</HTML>
+
+
+
+

@@ -10,11 +10,11 @@ def index():
 
 @app.route('/posts')
 def posts_template():
-    return render_template('view_posts.html')
+    return render_template('view_posts.html', start_post=request.args.get('start_post'))
 
 @app.route('/api/posts')
 def posts_page():
-    blogs = get_posts_page(int(request.args.get('start')),  int(request.args.get('size')))
+    blogs = get_posts_page(int(request.args.get('start')),  int(request.args.get('size')), request.args.get('direction'))
     return jsonify([ blog.__dict__ for blog in blogs])
 
 @app.route('/admin/posts/new', methods=['POST', 'GET'])

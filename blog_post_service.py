@@ -17,8 +17,12 @@ def get_first_post():
 def get_posts():
     return BlogPost.query.all()
 
-def get_posts_page(start, size):
-    posts = BlogPost.query.filter(BlogPost.id >= start).limit(size).all()
+def get_posts_page(start, size, direction):
+    posts = None
+    if direction == 'forward':
+        posts = BlogPost.query.filter(BlogPost.id >= start).order_by(BlogPost.id.asc()).limit(size).all()
+    if direction == 'backward':
+        posts = BlogPost.query.filter(BlogPost.id <= start).order_by(BlogPost.id.desc()).limit(size).all()
     return [ to_response(post) for post in posts ]
 
 def to_response(post):

@@ -4,6 +4,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"
 			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 			  crossorigin="anonymous"></script>
+        
 <HEAD>
 <BODY>
 <div id="target"></div>
@@ -34,17 +35,7 @@ function renderPost(post) {
   postElement.innerHTML = converter.makeHtml(post.content)
   postTitle.innerText= post.name
 }
-loadPosts(0, "forward", renderPosts)
-
-
-/**function run() {
-  var text = document.getElementById('sourceTA').value,
-      target = document.getElementById('targetDiv'),
-      converter = new showdown.Converter(),
-      html = converter.makeHtml(text);
-    
-    target.innerHTML = html;
-}**/
+loadPosts(startPost, "forward", renderPosts)
 </script>
 
 </HTML>

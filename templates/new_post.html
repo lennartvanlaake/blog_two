@@ -3,6 +3,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script src="https://cdn.tutorialjinni.com/showdown/1.9.1/showdown.js"></script>
+
 
 <HEAD>
 <BODY>
@@ -38,25 +40,15 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="content">Content</label>  
   <div class="col-md-6">
-  
-  <input id="content" name="content" type="text" placeholder="content" class="form-control input-md">
-    
-  </div>
-</div>
-
-<!-- File Button --> 
-<div class="form-group">
-  <label class="col-md-4 control-label" for="pictures">File Button</label>
-  <div class="col-md-4">
-    <input id="pictures" name="pictures" class="input-file" type="file">
+    <textarea  id="content" name="content" class="form-control input-md"></textarea>
+    <div id="targetDiv"></div>
   </div>
 </div>
 
 <!-- Button -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="singlebutton">Single Button</label>
   <div class="col-md-4">
-    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Button</button>
+    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit</button>
   </div>
 </div>
 
@@ -66,14 +58,11 @@
 </fieldset>
 </form>
 
-
 </BODY>
 
 <script>
 
-
-
-var simplemde = new SimpleMDE({ element: document.getElementById("content") });
+var markDownEditor = new SimpleMDE({ element: document.getElementById("content") });
 function setCoordinates(position) {
     document.getElementById("latitude").value = position.coords.latitude;
     document.getElementById("longditude").value = position.coords.longitude;

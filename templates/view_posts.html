@@ -4,10 +4,24 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"
 			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 			  crossorigin="anonymous"></script>
+ <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/css/ol.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
+ <link rel="stylesheet" href="{{ url_for('static',filename='base.css') }}">
+ <link rel="stylesheet" href="{{ url_for('static',filename='show_posts.css') }}">
         
 <HEAD>
 <BODY>
-<div id="target"></div>
+
+<div class="gridContainer">
+  <div class="fillLeft"></div>
+  <div class="fillRight"></div> 
+  <div id="target" class="target"></div>
+</div>
+
 </BODY>
 
 <script>
@@ -24,17 +38,49 @@ function renderPosts(data) {
   data.forEach(post => renderPost(post))
 }
 function renderPost(post) {
+  var postMap = document.createElement("DIV");
+  postMap.id = "map" + post.id
+  postMap.className += "map"
   var postElement = document.createElement("DIV");
+
   var postContent = document.createElement("DIV");
   var postTitle = document.createElement("H1");
-
   postContainer.append(postTitle);
   postContainer.append(postElement);
+  postContainer.append(postMap);
   postElement.append(postContent);
 
+  renderMap(postMap.id, post.longditude, post.latitude)
   postElement.innerHTML = converter.makeHtml(post.content)
   postTitle.innerText= post.name
 }
+function renderMap(elementId, longditude, latitude) {
+    const lonLat = ol.proj.fromLonLat([latitude, longditude])
+    const map = new ol.Map({
+    controls: [],
+    interactions: [],
+    target: elementId,
+    layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        })
+      ],
+    view: new ol.View({
+        center: lonLat,
+        zoom: 12
+      })
+    });
+    var layer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        features: [
+            new ol.Feature({
+                geometry: new ol.geom.Point(lonLat)
+            })
+        ]
+      })
+    });
+    map.addLayer(layer);
+} 
 loadPosts(startPost, "forward", renderPosts)
 </script>
 

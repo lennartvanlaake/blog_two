@@ -26,9 +26,12 @@ def get_posts_page(start, size, direction):
     return [ to_response(post) for post in posts ]
 
 def to_response(post):
-    return BlogPostResponse(post.name, post.content)
+    return BlogPostResponse(post.id, post.latitude, post.longditude, post.name, post.content)
     
 class BlogPostResponse():
-    def __init__(self, name, content):
+    def __init__(self, id, longditude, latitude, name, content):
+        self.id = id
+        self.longditude = longditude
+        self.latitude = latitude
         self.name = name
         self.content = content

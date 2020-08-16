@@ -1,9 +1,26 @@
 
-#sourceTA {
-    display: block;
+.map {
+  height: 100px;
+  width: 100%;
 }
-#targetDiv {
-  border: 1px dashed #333333;
-  width: 600px;
-  height: 400px;
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 20% auto 20%;
 }
+
+
+.fillLeft {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.fillRight {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+.target { 
+  grid-column-start: 2;
+  grid-column-end: 3;
+} 

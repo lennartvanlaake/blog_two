@@ -53,6 +53,7 @@ function renderPost(post) {
   var postElement = document.createElement("DIV");
 
   var postContent = document.createElement("DIV");
+  postContent.className += "postContent"
   var postTitle = document.createElement("H1");
   postElement.append(postMap);
   postElement.append(postTitle);

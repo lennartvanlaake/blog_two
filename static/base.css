@@ -1,4 +1,23 @@
 #mapid { height: 180px; }
+
+* {
+    margin: 0;
+    padding: 0;
+}
+p {
+    margin: 10px;
+    padding: 10px;
+}
+div, body {
+    font-family: 'Montserrat', sans-serif;
+}
 h1, h2, h3 {
    font-family: 'Pacifico', cursive;
+   text-align: center;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block; /* remove extra space below image */
 }

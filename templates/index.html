@@ -32,7 +32,7 @@
     }).addTo(mymap);
     {% for post in posts %} 
     var marker = L.marker([ {{ post.latitude }}, {{ post.longditude }} ]).addTo(mymap);
-    marker.bindPopup("{{ post.name }}");
+    marker.bindPopup("<a href=/posts?start={{ post.id }}>{{ post.name }}</a>");
     {% endfor %}
 </script>
 </HTML>

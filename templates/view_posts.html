@@ -1,36 +1,35 @@
-<HTML>
-<HEAD>
-<script src="https://cdn.tutorialjinni.com/showdown/1.9.1/showdown.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"
+{% extends "base.html" %}
+{% block head %}
+  {{ super() }}
+  <script src="https://cdn.tutorialjinni.com/showdown/1.9.1/showdown.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"
 			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 			  crossorigin="anonymous"></script>
- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
    crossorigin=""></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/css/ol.css" type="text/css">
-<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
-<script src="{{ url_for('static',filename='show_posts.js') }}"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/css/ol.css" type="text/css">
+  <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
+  <script src="{{ url_for('static',filename='show_posts.js') }}"></script>
 
  <link rel="stylesheet" href="{{ url_for('static',filename='base.css') }}">
  <link rel="stylesheet" href="{{ url_for('static',filename='show_posts.css') }}">
-        
-<HEAD>
-<BODY>
-
+{% endblock %}
+{% block content %}
 <div class="gridContainer">
   <div class="fillLeft"></div>
   <div class="fillRight"></div> 
   <div id="target" class="target"></div>
 </div>
-
-</BODY>
 <script>
 const startPost={{ start_post }};
 const postContainer = document.getElementById('target');
 appendPosts(startPost);
 </script>
-</HTML>
+{% endblock %}
+
+
 
 
 

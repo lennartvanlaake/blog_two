@@ -1,38 +1,29 @@
-<HTML>
-<HEAD>
-
-
- <link rel="stylesheet" href="{{ url_for('static',filename='base.css') }}">
- <link rel="stylesheet" href="{{ url_for('static',filename='index.css') }}">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-   crossorigin=""/>
- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-   crossorigin=""></script>
-
-<HEAD>
-<BODY>
-
-
-<div id="mapid"></div>
-
-</BODY>
-
-
-<script>
-
-   var mymap = L.map('mapid').setView([{{ first_post.latitude }}, {{ first_post.longditude }}], 8);
-    L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        subdomains: 'abcd',
-        minZoom: 1,
-        maxZoom: 16,
-        ext: 'jpg'
-    }).addTo(mymap);
-    {% for post in posts %} 
-    var marker = L.marker([ {{ post.latitude }}, {{ post.longditude }} ]).addTo(mymap);
-    marker.bindPopup("<a href=/posts?start={{ post.id }}>{{ post.name }}</a>");
-    {% endfor %}
-</script>
-</HTML>
+{% extends "base.html" %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static',filename='base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='index.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+{% endblock %}
+{% block content %}
+  <div id="mapid"></div>
+  <script>
+    var mymap = L.map('mapid').setView([{{ first_post.latitude }}, {{ first_post.longditude }}], 8);
+      L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+          attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          subdomains: 'abcd',
+          minZoom: 1,
+          maxZoom: 16,
+          ext: 'jpg'
+      }).addTo(mymap);
+      {% for post in posts %} 
+      var marker = L.marker([ {{ post.latitude }}, {{ post.longditude }} ]).addTo(mymap);
+      marker.bindPopup("<a href=/posts?start={{ post.id }}>{{ post.name }}</a>");
+      {% endfor %}
+  </script>
+{% endblock %}

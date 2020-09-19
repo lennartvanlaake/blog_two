@@ -1,14 +1,12 @@
-<HTML>
-<HEAD>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-<script src="https://cdn.tutorialjinni.com/showdown/1.9.1/showdown.js"></script>
-
-
-<HEAD>
-<BODY>
-
+{% extends "base.html" %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+  <script src="https://cdn.tutorialjinni.com/showdown/1.9.1/showdown.js"></script>
+{% endblock %}
+{% block content %}
 <form class="form-horizontal" method="POST">
 <fieldset>
 
@@ -57,9 +55,6 @@
 
 </fieldset>
 </form>
-
-</BODY>
-
 <script>
 
 var markDownEditor = new SimpleMDE({ element: document.getElementById("content") });
@@ -69,6 +64,4 @@ function setCoordinates(position) {
 }
 navigator.geolocation.getCurrentPosition(setCoordinates);
 </script>
-
-</HTML>
-
+{% endblock %}

@@ -7,24 +7,31 @@ let firstPostId=999999
 let rendering=false
 
 function appendPosts(start) {
+  if (rendering) return;
+  rendering = true;
   loadPosts(start, "forward", appendPostsCallback);
 }
 
 function prependPosts() {
+  if (rendering) return;
+  rendering = true;
   console.log("firstpost: " + (firstPostId - 1));
   loadPosts(firstPostId - 1, "backward", prependPostsCallback);
 }
 
 function loadPosts(start, direction, callback) {
-  $.getJSON("/api/posts?start=" + start + "&size=" + pageSize + "&direction=" + direction, callback)
+  $.getJSON("/api/posts?start=" + start + "&size=" + pageSize + "&direction=" + direction, callback);
 }
 function prependPostsCallback(data) {
+  console.log("rendering " + rendering);
   data.forEach(post => {
     postContainer.prepend(renderPost(post));
     renderMap("map" + post.id, post.longditude, post.latitude);
   })
+  rendering = false;
 }
 function appendPostsCallback(data) {
+  console.log("rendering " + rendering);
   data.forEach(post => {
     postContainer.append(renderPost(post));
     renderMap("map" + post.id, post.longditude, post.latitude);
@@ -32,6 +39,8 @@ function appendPostsCallback(data) {
     console.log("lastpost: " + lastPost);
     window.scroll(window.pageXOffset, window.pageYOffset + 10); 
   })
+  rendering = false;
+
 }
 function renderPost(post) {
   if (post.id < firstPostId) {
@@ -45,8 +54,8 @@ function renderPost(post) {
 
   var postContent = document.createElement("DIV");
   var postTitle = document.createElement("H1");
-  postElement.append(postTitle);
   postElement.append(postMap);
+  postElement.append(postTitle);
   postElement.append(postContent);
 
   postContent.innerHTML = converter.makeHtml(post.content)
@@ -83,23 +92,12 @@ function renderMap(elementId, longditude, latitude) {
 
 
 window.onscroll = function(ev) {
-    if (rendering) {
-      return
-    }
     if ((window.innerHeight + window.pageYOffset) >= document.body.scrollHeight) {
       console.log("bottom");
-      rendering = true;
-      console.log("rendering: " + rendering)
       appendPosts(lastPost + 1);
-      rendering = false;
-      console.log("rendering: " + rendering)
-
     }
     if (window.pageYOffset == 0) { 
       console.log("top");
-      rendering = true;
       prependPosts();
-      rendering = false;
-
     }
 };

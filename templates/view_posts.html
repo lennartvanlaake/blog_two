@@ -26,11 +26,9 @@
 
 </BODY>
 <script>
-const startPost={{ start_post }}
-const pageSize=5
-const converter = new showdown.Converter()
-const postContainer = document.getElementById('target')
-loadPosts(startPost, "forward", appendPosts)
+const startPost={{ start_post }};
+const postContainer = document.getElementById('target');
+appendPosts(startPost);
 </script>
 </HTML>
 

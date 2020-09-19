@@ -1,13 +1,27 @@
 const forward="forward"
 const backward="backward"
-function loadPosts(start, direction, callback) {
-    $.getJSON("/api/posts?start=" + start + "&size=" + pageSize + "&direction=" + direction, callback)
+const pageSize=5
+const converter = new showdown.Converter()
+let lastPost=0
+let rendering=false
+
+function appendPosts(start) {
+  if (!rendering) {
+    rendering = true;  
+    loadPosts(start, "forward", appendPostsCallback);
+  }
 }
-function appendPosts(data) {
+
+function loadPosts(start, direction, callback) {
+  $.getJSON("/api/posts?start=" + start + "&size=" + pageSize + "&direction=" + direction, callback)
+}
+function appendPostsCallback(data) {
   data.forEach(post => {
     postContainer.append(renderPost(post));
     renderMap("map" + post.id, post.longditude, post.latitude);
+    lastPost=post.id;
   })
+  rendering = false;
 }
 function renderPost(post) {
   var postMap = document.createElement("DIV");
@@ -55,8 +69,9 @@ function renderMap(elementId, longditude, latitude) {
 
 
 window.onscroll = function(ev) {
-    if ((window.innerHeigkht + window.pageYOffset) >= document.body.scrollHeight) {
-      console.log("Bottom of page");
+    if ((window.innerHeight + window.pageYOffset) >= document.body.scrollHeight) {
+      console.log("bottom")
+      appendPosts(lastPost + 1)
     }
     if (window.pageYOffset == 0) { 
       console.log("top");

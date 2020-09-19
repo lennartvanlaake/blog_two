@@ -1,0 +1,11 @@
+- posts page:
+    - implement infinite scroll  
+    - make maps in posts page full-width
+    - make images in posts display correctly
+- index page:
+    - add title banner
+    - remove padding from maps
+- editor page:
+    - preview location
+    - support images in a smarter way
+

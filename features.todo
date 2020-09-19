@@ -1,8 +1,10 @@
 - posts page:
     - implement infinite scroll backwards OK
-    - make maps in posts page full-width
-    - make images in posts display correctly
-    - make page responsive
+    - make maps in posts page full-width OK
+    - make images in posts display correctly OK
+    - make page responsive OK
+    - render few posts before current post OK
+    - scroll to most recent post when doing prepend OK
 - index page:
     - add title banner
     - remove padding from maps

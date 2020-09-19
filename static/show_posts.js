@@ -30,6 +30,7 @@ function appendPostsCallback(data) {
     renderMap("map" + post.id, post.longditude, post.latitude);
     lastPost=post.id;
     console.log("lastpost: " + lastPost);
+    window.scroll(window.pageXOffset, window.pageYOffset + 10); 
   })
 }
 function renderPost(post) {

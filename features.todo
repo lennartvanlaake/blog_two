@@ -2,6 +2,7 @@
     - implement infinite scroll  
     - make maps in posts page full-width
     - make images in posts display correctly
+    - make page responsive
 - index page:
     - add title banner
     - remove padding from maps
@@ -9,3 +10,11 @@
     - preview location
     - support images in a smarter way
 
+
+
+window.onscroll = function(ev) {
+    if ((window.innerHeight + window.pageYOffset) >= document.body.scrollHeight) {
+      console.log("Bottom of page");
+    }
+    if (window.pageYOffset == 0) { console.log("top")}
+};

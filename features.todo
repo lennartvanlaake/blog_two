@@ -6,9 +6,9 @@
     - render few posts before current post OK
     - scroll to most recent post when doing prepend OK
 - index page:
-    - add title banner
-    - remove padding from maps
+    - add title banner OK
+    - remove padding from maps OK
 - editor page:
-    - preview location
+    - preview location OK
     - support images in a smarter way
 

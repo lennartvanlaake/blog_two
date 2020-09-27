@@ -5,6 +5,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
   <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
   <script src="https://cdn.tutorialjinni.com/showdown/1.9.1/showdown.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
+  <script src="{{ url_for('static',filename='show_posts.js') }}"></script>
+
 {% endblock %}
 {% block content %}
 <form class="form-horizontal" method="POST">
@@ -38,10 +41,29 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="content">Content</label>  
   <div class="col-md-6">
-    <textarea  id="content" name="content" class="form-control input-md"></textarea>
+    <textarea  id="editor" name="content" class="form-control input-md"></textarea>
     <div id="targetDiv"></div>
   </div>
 </div>
+
+
+<!-- longditude input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="content">Longditude</label>  
+  <div class="col-md-6">
+    <input id="longditude" name="content" class="form-control input-md"></input>
+  </div>
+</div>
+
+
+<!-- latitude input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="content">Latitude</label>  
+  <div class="col-md-6">
+    <input id="latitude" name="content" class="form-control input-md"></input>
+  </div>
+</div>
+
 
 <!-- Button -->
 <div class="form-group">
@@ -50,17 +72,24 @@
   </div>
 </div>
 
-<input type="hidden" id="longditude" name="longditude"> 
-<input type="hidden" id="latitude" name="latitude">
-
 </fieldset>
 </form>
+
+<input class="btn btn-primary" type="button" value="Preview" onclick="previewCoordinates();" />
+
+<div id="previewLocation" style="height:100px; width=100px;"></div>
+
 <script>
 
-var markDownEditor = new SimpleMDE({ element: document.getElementById("content") });
+var markDownEditor = new SimpleMDE({ element: document.getElementById("editor") });
 function setCoordinates(position) {
     document.getElementById("latitude").value = position.coords.latitude;
     document.getElementById("longditude").value = position.coords.longitude;
+    previewCoordinates();
+}
+function previewCoordinates() {
+  document.getElementById("previewLocation").innerHTML = "";
+  renderMap("previewLocation", document.getElementById("latitude").value, document.getElementById("longditude").value);
 }
 navigator.geolocation.getCurrentPosition(setCoordinates);
 </script>
